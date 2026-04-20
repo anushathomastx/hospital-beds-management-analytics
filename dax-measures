@@ -1,0 +1,20 @@
+rolling-7-day-census.dax
+AVERAGEX(
+    DATESINPERIOD(
+        'aprildb hospital_daily_kpis'[day],
+        MAX('aprildb hospital_daily_kpis'[day]),
+        -7,
+        DAY
+    ),
+    CALCULATE(AVERAGE('aprildb hospital_daily_kpis'[census])))
+
+admissions-mtd.dax
+Admissions (MTD) =
+TOTALMTD(
+    SUM('aprildb hospital_daily_kpis'[admissions]),
+    'aprildb hospital_daily_kpis'[day])
+
+monthly-average-census.dax
+AVERAGEX(
+    VALUES('aprildb hospital_daily_kpis'[MonthStart]),
+    CALCULATE(AVERAGE('aprildb hospital_daily_kpis'[census])))
